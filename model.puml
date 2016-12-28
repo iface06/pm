@@ -1,0 +1,60 @@
+@startuml
+Application "1" -- "*" Project
+Project "1" -- "*" Requirement
+Requirement "1" -- "*" Task
+Requirement "1" -- "*" Test
+Task "1" -- "*" TimeRecord
+Task "1" -- "*" Test
+TimeRecord "*" -- "1" User
+User -- Task : responsibleUser
+Stakeholder "*"-- "1" Project
+Stakeholder "*"-- "1" User
+Stakeholder "*" -- "1" Role
+User -- Requirement : author
+Project --|> PersistentObject
+PersistentObject -- User : createdBy
+
+class PersistentObject {
+  identifier: String
+  created_date: DateTime
+  modified_date: DateTime
+}
+
+
+
+enum Role {
+  PROJECT_MANAGER
+}
+
+class Project {
+  target:Date
+  identifier: String
+}
+
+class Requirement {
+  description: String
+  complexity: int
+  weight: int
+}
+
+class Task {
+  description: String
+  estimation: int
+  weight: int
+}
+
+class TimeRecord {
+  start: DateTime
+  end: DateTime
+}
+
+class User {
+  nickname: String
+}
+
+class Test {
+  description: String
+  expectedResult:String
+}
+
+@enduml

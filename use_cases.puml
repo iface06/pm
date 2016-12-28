@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+actor User
+
+rectangle "Project Management" {
+  :Project Member: -|> User
+  :Project Manager: -|> :Project Member:
+  :Developer: -|> :Project Member:
+  User  --> (Create Project)
+  User  --> (Select Project)
+  (Specify Requirements) as SpecifyReq
+  (Assign Stakeholder to Project) as AssignStakeholder
+  :Project Member:  --> SpecifyReq
+  SpecifyReq --> (Split Requirements into Tasks): extends
+  SpecifyReq -->  (Assign Responsible Developer to a Tasks): extends
+  SpecifyReq --> (Log Time Records to a selected Task): extends
+  SpecifyReq --> (Enter Complexity of the Requirement): extends
+  SpecifyReq --> (Estimate Task): extends
+  
+  :Project Manager: --> AssignStakeholder
+  (Assign Project Manager) --> AssignStakeholder :extends
+  (Assign Developers) --> AssignStakeholder: extends
+  (Assign Product Owner) --> AssignStakeholder: extends
+
+
+}
+
+rectangle ApplicationManagement{
+  :Application Manager: -|> User
+  User --> (Create an Application)
+  :Application Manager: --> (Assign Project to an Application)
+}
+
+
+@enduml
